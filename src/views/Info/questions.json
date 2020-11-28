@@ -1,0 +1,19 @@
+{
+    "questions": [
+        {
+            "type": "text",
+            "question": "what is your name?",
+            "answerSpec": ""
+        },
+        {
+            "type": "number",
+            "question": "How much time are you planning on staying in the city",
+            "answerSpec": "weeks"
+        },
+        {
+            "type": "checkbox",
+            "question": "Are you planning to traffic in the city center?",
+            "answerSpec": ""
+        }
+    ]
+}

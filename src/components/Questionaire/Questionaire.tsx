@@ -31,7 +31,9 @@ const Questionaire: React.FC<QuestionaireProps> = ({
 
   const handleSubmit = (event: any) => {
     event.preventDefault();
-    liftState({value,bool})
+    liftState({value,bool});
+    setValue("");
+    setBool(false);
   };
 
   return (
@@ -50,9 +52,9 @@ const Questionaire: React.FC<QuestionaireProps> = ({
         <form onSubmit={handleSubmit}>
           <label>
             { type==='checkbox' ?
-            <input type={type} value={value} onClick={()=>setBool(!bool)} onKeyDown={(event)=> event.key === "Enter" && console.log('heyhoo')} />
+            <input type={type} value={value} onClick={()=>setBool(!bool)} onKeyDown={(event)=> event.key === "Enter" && console.log('heyhoo')} required />
             :
-            <input type={type} value={value} onChange={handleChange} />
+            <input style={{height:'20px'}} type={type} value={value} onChange={handleChange} required/>
             }
           </label>
         </form>

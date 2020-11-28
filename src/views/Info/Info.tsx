@@ -5,6 +5,7 @@ import { ApplicationState } from "../../store";
 import AppStyles from "../../App.styles";
 import Questionaire from "../../components/Questionaire/Questionaire";
 import { setAnswersData } from "../../store/ducks/answers/actions";
+import jsonfile from "./questions.json";
 
 const Info: React.FC = () => {
   //redux util
@@ -20,16 +21,18 @@ const Info: React.FC = () => {
   const history = useHistory();
   const changePage = (route: string): any => history.push(route);
 
-  //component state and lyfecycle
+  //component state, lyfecycle and data fetching
   const [questionNumber, setQuestionNumber] = useState(0);
   const [data, setData] = useState({});
+  const questions = jsonfile.questions;
+  const question = questions[questionNumber];
 
   useEffect(() => {
     setData(state.AnswersData);
   }, []);
 
   useEffect(() => {
-    if (questionNumber > 2) {
+    if (questionNumber > questions.length - 1) {
       dispatch(setAnswersData(data));
       changePage("/results");
     }
@@ -44,34 +47,14 @@ const Info: React.FC = () => {
         } as React.CSSProperties
       }
     >
-      {questionNumber === 0 ? (
+      {questionNumber <= questions.length - 1 && (
         <Questionaire
-          type="text"
-          question="What is your name?"
-          answerSpec=""
+          type={question.type}
+          question={question.question}
+          answerSpec={question.answerSpec}
           liftState={(formState: { value: any; bool: boolean }) => {
-            setData({ ...data, name: formState.value });
-            setQuestionNumber(1);
-          }}
-        />
-      ) : questionNumber === 1 ? (
-        <Questionaire
-          type="number"
-          question="How much time are you planning on staying in the city"
-          answerSpec="weeks"
-          liftState={(formState: { value: any; bool: boolean }) => {
-            setData({ ...data, time: formState.value });
-            setQuestionNumber(2);
-          }}
-        />
-      ) : (
-        <Questionaire
-          type="checkbox"
-          question="Are you planning to traffic in the city center?"
-          answerSpec=""
-          liftState={async (formState: { value: any; bool: boolean }) => {
-            setData({ ...data, center: formState.bool });
-            setQuestionNumber(3);
+            setData({ ...data, name: formState.value, center: formState.bool });
+            setQuestionNumber(questionNumber + 1);
           }}
         />
       )}
