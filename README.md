@@ -15,7 +15,7 @@ The current application is a question formulaire, flexible and editable. There a
 
 ---
 
-####questions.json
+### questions.json
 
 Located inside `src > views > Info` this file emulates and API fetching.
 In order to work should have the following format:
@@ -63,8 +63,8 @@ The **"depends"** propertie links the current question to a previous question, t
     	]
     }
 
-According to this example, the question do you know which city zones are you move around tells if you need to anser or not the following questions
+According to this example, the question "Do you know which city zones are you moving around?" tells if you need to anser or not the following question.
 
-####resultProcessing.ts
+### resultProcessing.ts
 
 Located inside `src > views > Results` is the file that processes the answers from the questionaire and converts into a string, according to some logic.
