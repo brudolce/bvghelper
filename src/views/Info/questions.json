@@ -2,18 +2,39 @@
     "questions": [
         {
             "type": "text",
-            "question": "what is your name?",
-            "answerSpec": ""
+            "question": "What is your name?",
+            "options": []
         },
         {
             "type": "number",
-            "question": "How much time are you planning on staying in the city",
-            "answerSpec": "weeks"
+            "question": "How many weeks are you staying in the city?",
+            "options": []
+        },
+        {
+            "type": "radio",
+            "question": "Are you a student?",
+            "options": [
+                "Yes",
+                "No"
+            ]
+        },
+        {
+            "type": "radio",
+            "question": "Do you know which city zones are you moving around?",
+            "options": [
+                "Yes",
+                "No"
+            ]
         },
         {
             "type": "checkbox",
-            "question": "Are you planning to traffic in the city center?",
-            "answerSpec": ""
+            "question": "Which city zones are you going?",
+            "options": [
+                "A",
+                "B",
+                "C"
+            ],
+            "depends": "Do you know which zones are you moving around?"
         }
     ]
 }

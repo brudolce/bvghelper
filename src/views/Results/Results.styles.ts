@@ -4,7 +4,7 @@ export default class ResultsStyles extends AppStyles {
   
   display():Object{
     return({
-      height: '300px',
+      minHeight: '50vh',
       width: '40vw',
       minWidth: '280px',
       margin: 20,
@@ -12,7 +12,7 @@ export default class ResultsStyles extends AppStyles {
       borderRadius: 25,
       border: `2px solid black`,
       ...this.container('column'),
-      backgroundColor: this.color1
+      backgroundColor: 'rgba(255, 255, 255, 0.70)'
     })
   }
 

@@ -2,21 +2,21 @@ import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { ApplicationState } from "../../store";
-import AppStyles from "../../App.styles";
+import InfoStyles from "./Info.styles";
 import Questionaire from "../../components/Questionaire/Questionaire";
 import { setAnswersData } from "../../store/ducks/answers/actions";
 import jsonfile from "./questions.json";
+import { depedencyCheck } from "./dependencyCheck";
 
 const Info: React.FC = () => {
   //redux util
   const dispatch = useDispatch();
-  const state = useSelector(
-    (reduxState: ApplicationState) => reduxState.answers
+  const store = useSelector(
+    (reduxState: ApplicationState) => reduxState.answers.AnswersData
   );
 
   //styles
-  const CSS = AppStyles.factory();
-
+  const CSS = InfoStyles.Factory();
   //router
   const history = useHistory();
   const changePage = (route: string): any => history.push(route);
@@ -28,7 +28,7 @@ const Info: React.FC = () => {
   const question = questions[questionNumber];
 
   useEffect(() => {
-    setData(state.AnswersData);
+    setData(store);
   }, []);
 
   useEffect(() => {
@@ -47,17 +47,25 @@ const Info: React.FC = () => {
         } as React.CSSProperties
       }
     >
-      {questionNumber <= questions.length - 1 && (
-        <Questionaire
-          type={question.type}
-          question={question.question}
-          answerSpec={question.answerSpec}
-          liftState={(formState: { value: any; bool: boolean }) => {
-            setData({ ...data, name: formState.value, center: formState.bool });
-            setQuestionNumber(questionNumber + 1);
-          }}
-        />
-      )}
+      <div style={CSS.barBorder()}>
+        <div style={CSS.barFill(questionNumber + 1, questions.length)}></div>
+      </div>
+
+      {questionNumber <= questions.length - 1 &&
+        depedencyCheck(question, data, () =>
+          setQuestionNumber(questionNumber + 1)
+        ) && (
+          <Questionaire
+            options={question.options}
+            type={question.type}
+            question={question.question}
+            liftState={(formState: { value: Object }) => {
+              let key = question.question;
+              setData({ ...data, [key]: formState.value });
+              setQuestionNumber(questionNumber + 1);
+            }}
+          />
+        )}
     </div>
   );
 };

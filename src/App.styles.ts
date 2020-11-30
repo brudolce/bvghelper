@@ -1,7 +1,7 @@
 export default class AppStyles {
 
   public color0:string = 'black';
-  public color1:string = 'white'; 
+  public color1:string = 'rgba(255, 255, 255, 0.70)'; 
   public color2:string = '#fdcd3b';
   public border:string = '2px solid black';
 

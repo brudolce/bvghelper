@@ -3,5 +3,5 @@ export enum AnswersTypes {
 }
 
 export interface AnswersState {
-  AnswersData: {name:string, time:number, center:boolean};
+  AnswersData: Object;
 }

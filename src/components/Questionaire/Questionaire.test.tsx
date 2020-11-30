@@ -8,7 +8,6 @@ describe('Card', () => {
     shallow(<Questionaire
       type="text"
       question="What is your name?"
-      answerSpec=""
       liftState={()=>'oke'}
     />);
   });

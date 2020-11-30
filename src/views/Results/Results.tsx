@@ -1,9 +1,9 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { ApplicationState } from "../../store";
 import { useHistory } from "react-router-dom";
 import ResultsStyles from "./Results.styles";
-import { decision } from "./decisionTree";
+import { resultProcessing } from "./resultProcessing";
 import CoolButton from "../../components/CoolButton/CoolButton";
 
 const Results: React.FC = () => {
@@ -12,10 +12,22 @@ const Results: React.FC = () => {
     (reduxState: ApplicationState) => reduxState.answers.AnswersData
   );
 
-  const CSS = ResultsStyles.Factory();
-
+  //router
   const history = useHistory();
   const changePage = (route: string): any => history.push(route);
+
+  //styles
+  const CSS = ResultsStyles.Factory();
+
+  //component state, lyfecycle and data fetching
+  const keys = Object.keys(store);
+  const values = Object.values(store);
+  const name = values.shift();
+  keys.shift();
+
+  useEffect(() => {
+    if (keys.length === 0) changePage("/info");
+  }, []);
 
   return (
     <div
@@ -27,28 +39,37 @@ const Results: React.FC = () => {
       }
     >
       <div style={CSS.display()}>
+        <div style={{ ...CSS.text(2, CSS.color0, CSS.color1), margin: "20px" }}>
+          Hi {name}, thanks for answering some questions, here are your results:
+        </div>
         <div>
-          <div style={{ ...CSS.text(1.5, CSS.color2), margin: "10px" }}>
-            Hi {store.name}, thanks for answering some questions, here are your
-            Results:
-          </div>
-          <div style={{ margin: "10px" }}>
-            - You are going to stay {store.time} weeks in Berlin
-          </div>
-          <div style={{ margin: "10px" }}>
-            - And you are {!store.center && "not"} going to traffic in the city
-            center
-          </div>
+          {values.map((el, index) => (
+            <div key={index} style={{ margin: "10px" }}>
+              {keys[index]}{" "}
+              {typeof el === "object"
+                ? Object.keys(el).map((key) => el[key] && key)
+                : el}
+            </div>
+          ))}
 
           <div
-            style={{ margin: "20px", ...CSS.text(2, CSS.color0, CSS.color2) }}
+            style={{ margin: "20px", ...CSS.text(1.5, CSS.color0, CSS.color1) }}
           >
-            {" "}
-            {decision(store)}
+            You Should buy the following ticket:
+          </div>
+          <div
+            style={{
+              margin: "0 0 30px 0",
+              ...CSS.text(1.5, CSS.color2, CSS.color0),
+            }}
+          >
+            {resultProcessing(store)}
           </div>
         </div>
 
-        <CoolButton size={1} onClick={() => changePage("/info")}>Restart</CoolButton>
+        <CoolButton size={1} onClick={() => changePage("/info")}>
+          Restart
+        </CoolButton>
       </div>
     </div>
   );
