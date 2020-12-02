@@ -4,9 +4,6 @@
 
 ---
 
-http://bvg-helper.surge.sh/
-
----
 
 The current application is a question formulaire, flexible and editable. There are two main files in the application that needed to be edited in order to make your cool question form:
 
